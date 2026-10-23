@@ -1,0 +1,29 @@
+# Données brutes
+
+## Avertissement
+
+Les données proviennent de [Football-Data.co.uk](https://www.football-data.co.uk/) et **ne sont pas librement redistribuables**.
+Ce dossier ne doit pas être versionné dans le dépôt Git.
+
+## Comment obtenir les données
+
+1. Se rendre sur https://www.football-data.co.uk/francem.php
+2. Télécharger les fichiers CSV correspondant aux saisons souhaitées :
+   - Ligue 1 (Division 1) : `F1.csv`
+3. Placer les fichiers dans ce dossier avec le nommage suivant :
+   ```
+   data/F1_2024-2025.csv
+   data/F1_2023-2024.csv
+   data/F1_2022-2023.csv
+   ```
+
+## Fichiers
+
+| Fichier | Saison | Lignes | Statut |
+|---|---|---|---|
+| `F1_2024-2025.csv` | 2024-2025 | 306 | Inspecté |
+
+## Licence
+
+Données gratuites à usage personnel / analyse quantitative.
+Voir https://www.football-data.co.uk/disclaimer.php
