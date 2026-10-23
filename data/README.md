@@ -17,11 +17,22 @@ Ce dossier ne doit pas être versionné dans le dépôt Git.
    data/F1_2022-2023.csv
    ```
 
+## Inspection des données
+
+Un script Python standard library est fourni pour inspecter un CSV :
+
+```bash
+python3 data/F1_2024-2025_inspection.py
+python3 data/F1_2024-2025_inspection.py data/F1_2023-2024.csv
+```
+
 ## Fichiers
 
-| Fichier | Saison | Lignes | Statut |
-|---|---|---|---|
-| `F1_2024-2025.csv` | 2024-2025 | 306 | Inspecté |
+| Fichier | Description |
+|---|---|
+| `F1_2024-2025.csv` | 306 matchs, 119 colonnes, UTF-8 avec BOM |
+| `F1_2024-2025_inspection.py` | Script d'inspection standard library |
+| `README.md` | Ce fichier |
 
 ## Licence
 
