@@ -1,0 +1,30 @@
+services:
+  mariadb:
+    image: mariadb:11.4
+    container_name: football-odds-mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-root}
+      MARIADB_DATABASE: ${MARIADB_DATABASE:-football_odds}
+      MARIADB_USER: ${MARIADB_USER:-football}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD:-football}
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-p${MARIADB_ROOT_PASSWORD:-root}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - football-network
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  football-network:
+    driver: bridge
