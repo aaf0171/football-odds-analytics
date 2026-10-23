@@ -18,6 +18,7 @@ from pathlib import Path
 
 from pipeline.extract import extract_season
 from pipeline.load import load_season
+from pipeline.validate import validate_all
 
 logger = logging.getLogger(__name__)
 
@@ -56,8 +57,24 @@ def run_pipeline(season: str, csv_path: str | None = None, dry_run: bool = False
     print("\n" + extract_stats.summary())
 
     if dry_run:
-        logger.info("Mode dry-run : chargement ignoré")
+        # Validation quand même en mode dry-run
+        logger.info("Mode dry-run : validation des données...")
+        validation_report = validate_all(matches, odds, season)
+        print("\n" + validation_report.summary_text)
+        logger.info("Validation dry-run terminée")
         return True
+
+    # --- Validation ---
+    logger.info("Validation des données...")
+    validation_report = validate_all(matches, odds, season)
+    print("\n" + validation_report.summary_text)
+
+    if validation_report.matches_with_issues > 0 or validation_report.odds_with_issues > 0:
+        logger.warning(
+            "%d match(s) et %d cote(s) avec anomalie(s) — chargement continu",
+            validation_report.matches_with_issues,
+            validation_report.odds_with_issues,
+        )
 
     # --- Chargement ---
     logger.info("Début du chargement en base...")
