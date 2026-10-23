@@ -43,8 +43,7 @@ CREATE TABLE IF NOT EXISTS `matches` (
     CONSTRAINT `fk_matches_away_team` FOREIGN KEY (`away_team_id`)
         REFERENCES `teams`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT `chk_goals_non_negative` CHECK (`home_goals` IS NULL OR `home_goals` >= 0),
-    CONSTRAINT `chk_goals_ht_non_negative` CHECK (`home_goals_ht` IS NULL OR `home_goals_ht` >= 0),
-    CONSTRAINT `chk_home_away_different` CHECK (`home_team_id` <> `away_team_id`)
+    CONSTRAINT `chk_goals_ht_non_negative` CHECK (`home_goals_ht` IS NULL OR `home_goals_ht` >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
   COMMENT='Un enregistrement par match';
 
