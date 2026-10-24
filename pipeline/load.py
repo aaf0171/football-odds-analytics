@@ -13,9 +13,15 @@ import time
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any, Generator
 
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
+
+# Charger les variables d'environnement depuis .env (si présent)
+_env_path = Path(__file__).resolve().parent.parent / ".env"
+load_dotenv(dotenv_path=_env_path, override=True)
 
 logger = logging.getLogger(__name__)
 
