@@ -132,6 +132,51 @@ Pour chaque bookmaker, 3 sous-colonnes :
 - Cotes Asian Handicap (`AHh`, `AHH`) : marché différent
 - Statistiques de match (tirs, corners, cartons) : utiles en phases ultérieures comme features pour les modèles
 
+## Champs calculés (Phase 7 / T7)
+
+### Issue 1N2 (`result_1n2`)
+
+Dérivée des scores finaux dans `pipeline/transform.py` et la vue `v_match_results` :
+
+| Source | Calcul | Valeur |
+|---|---|---|
+| `home_goals > away_goals` | — | `H` |
+| `home_goals = away_goals` | — | `D` |
+| `home_goals < away_goals` | — | `A` |
+| `home_goals` ou `away_goals` est `NULL` | — | `NULL` |
+
+### Probabilités implicites brutes
+
+Calculées dans `pipeline/transform.py` et la vue `v_implicit_probabilities` :
+
+| Champ SQL / Python | Formule |
+|---|---|
+| `prob_home_raw` | `1 / home_odds` |
+| `prob_draw_raw` | `1 / draw_odds` |
+| `prob_away_raw` | `1 / away_odds` |
+
+Si une cote est `NULL`, nulle ou négative, la probabilité brute correspondante est `NULL`.
+
+### Probabilités implicites normalisées
+
+Calculées dans `pipeline/transform.py` et la vue `v_implicit_probabilities` :
+
+| Champ SQL / Python | Formule |
+|---|---|
+| `prob_home_norm` | `(1/home_odds) / (1/home + 1/draw + 1/away)` |
+| `prob_draw_norm` | `(1/draw_odds) / (1/home + 1/draw + 1/away)` |
+| `prob_away_norm` | `(1/away_odds) / (1/home + 1/draw + 1/away)` |
+
+Calculées uniquement lorsque les trois cotes sont valides. Sinon, toutes sont `NULL`.
+
+### Marge du bookmaker
+
+| Champ SQL | Formule |
+|---|---|
+| `bookmaker_margin` | `(1/home + 1/draw + 1/away) - 1` |
+
+En pourcentage, représente le pourcentage théorique perdu par un parieur sur des mises équilibrées.
+
 ## Mappage vers le modèle relationnel
 
 | Colonne CSV | Table cible | Colonne SQL |

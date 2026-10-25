@@ -111,8 +111,9 @@ Options :
 Le pipeline effectue :
 1. **Extraction** : lecture du CSV, normalisation des colonnes et types
 2. **Validation** : vérification des règles métier (scores, dates, cotes, doublons)
-3. **Chargement** : insertion idempotente dans MariaDB (`ON DUPLICATE KEY UPDATE`)
-4. **Traçabilité** : chaque exécution est enregistrée dans `etl_runs`
+3. **Transformation** : calcul de l'issue 1N2 et des probabilités implicites
+4. **Chargement** : insertion idempotente dans MariaDB (`ON DUPLICATE KEY UPDATE`)
+5. **Traçabilité** : chaque exécution est enregistrée dans `etl_runs`
 
 ### Tests
 
@@ -197,16 +198,39 @@ Les données sont utilisées pour l'analyse historique uniquement. Leur redistri
 
 ## Méthodologie
 
-### Probabilités implicites
+### Issue 1N2 (Phase 7)
 
-Pour une cote décimale `o_i`, la probabilité implicite brute est `p_i = 1 / o_i`. La somme des probabilités brutes dépasse souvent 1 (marge du bookmaker).
+Calculée à partir des scores finaux :
+- `H` si `home_goals > away_goals`
+- `D` si `home_goals = away_goals`
+- `A` si `home_goals < away_goals`
+- `NULL` si un score est manquant (jamais imputé)
 
-Une normalisation par la somme fournit une approximation sans marge :
+### Probabilités implicites brutes (Phase 7)
+
+Pour une cote décimale `o_i > 0` :
 ```
-p_i_normalisee = p_i / (p_home + p_draw + p_away)
+p_brute_i = 1 / o_i
 ```
 
-Cette normalisation est indicative et ne représente pas la marge exacte du bookmaker.
+Si la cote est `NULL`, nulle ou négative, la probabilité brute est `NULL`.
+
+### Probabilités implicites normalisées (Phase 7)
+
+Pour un triplet complet de cotes valides :
+```
+p_norm_i = p_brute_i / (p_home_brute + p_draw_brute + p_away_brute)
+```
+
+Calculée uniquement si les trois cotes sont valides. Sinon, toutes les normalisées sont `NULL`.
+
+### Marge du bookmaker
+
+```
+marge = p_home_brute + p_draw_brute + p_away_brute - 1
+```
+
+### Évaluation des modèles
 
 ### Évaluation des modèles
 

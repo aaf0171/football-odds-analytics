@@ -7,7 +7,9 @@ Commande CLI :
 
 Le pipeline effectue :
     1. Extraction CSV (extract.py)
-    2. Chargement MariaDB (load.py)
+    2. Validation (validate.py)
+    3. Transformation (transform.py)
+    4. Chargement MariaDB (load.py)
 """
 
 from __future__ import annotations
@@ -18,6 +20,7 @@ from pathlib import Path
 
 from pipeline.extract import extract_season
 from pipeline.load import load_season
+from pipeline.transform import transform_all
 from pipeline.validate import validate_all
 
 logger = logging.getLogger(__name__)
@@ -56,14 +59,6 @@ def run_pipeline(season: str, csv_path: str | None = None, dry_run: bool = False
 
     print("\n" + extract_stats.summary())
 
-    if dry_run:
-        # Validation quand même en mode dry-run
-        logger.info("Mode dry-run : validation des données...")
-        validation_report = validate_all(matches, odds, season)
-        print("\n" + validation_report.summary_text)
-        logger.info("Validation dry-run terminée")
-        return True
-
     # --- Validation ---
     logger.info("Validation des données...")
     validation_report = validate_all(matches, odds, season)
@@ -75,6 +70,15 @@ def run_pipeline(season: str, csv_path: str | None = None, dry_run: bool = False
             validation_report.matches_with_issues,
             validation_report.odds_with_issues,
         )
+
+    # --- Transformation ---
+    logger.info("Transformation des données...")
+    transformed_matches, transformed_odds, transform_stats = transform_all(matches, odds)
+    print("\n" + transform_stats.summary())
+
+    if dry_run:
+        logger.info("Validation dry-run terminée")
+        return True
 
     # --- Chargement ---
     logger.info("Début du chargement en base...")
