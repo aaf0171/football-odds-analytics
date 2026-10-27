@@ -253,7 +253,7 @@ marge = p_home_brute + p_draw_brute + p_away_brute - 1
 | 2 | Environnement Python, Docker, modèle SQL | ✅ Terminé |
 | 3 | Ingestion idempotente | ✅ Terminé |
 | 4 | Validation et transformations | ✅ Terminé |
-| 5 | Analyse exploratoire (SQL + Pandas) | 🚧 À venir |
+| 5 | Analyse exploratoire (SQL) | ✅ Terminé |
 | 6 | Analyse et visualisation JupyterLab | 🚧 À venir |
 | 7 | Modèles de probabilités | 🚧 À venir |
 | 8 | Fiabilisation et portfolio | 🚧 À venir |
