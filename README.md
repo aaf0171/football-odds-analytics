@@ -254,7 +254,9 @@ marge = p_home_brute + p_draw_brute + p_away_brute - 1
 | 3 | Ingestion idempotente | ✅ Terminé |
 | 4 | Validation et transformations | ✅ Terminé |
 | 5 | Analyse exploratoire (SQL) | ✅ Terminé |
-| 6 | Analyse et visualisation JupyterLab | 🚧 À venir |
+| 6 | Analyse et visualisation JupyterLab | ✅ Terminé |
+| T9 | Analyse exploratoire avancée (Python) | ✅ Terminé |
+| T10 | Évaluation baseline bookmaker (bet365) | ✅ Terminé |
 | 7 | Modèles de probabilités | 🚧 À venir |
 | 8 | Fiabilisation et portfolio | 🚧 À venir |
 

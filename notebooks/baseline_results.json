@@ -1,0 +1,14 @@
+{
+  "model": "bookmaker_baseline_bet365",
+  "odds_type": "closing",
+  "season": "2024-2025",
+  "n_matches": 306,
+  "log_loss_norm": 0.9570114156261463,
+  "log_loss_raw": 0.902087788489833,
+  "brier_norm": 0.5654975579218883,
+  "brier_raw": 0.5657568386261438,
+  "moyenne_marge": 0.056475915032679735,
+  "mediane_marge": 0.056045,
+  "random_log_loss": 1.09861228866811,
+  "random_brier": 0.6666666666666669
+}

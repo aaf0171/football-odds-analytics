@@ -102,6 +102,46 @@ Exprimée en pourcentage, la marge représente le pourcentage théorique perdu p
 - Notebook d'évaluation des modèles dans `notebooks/02_evaluation_modeles.ipynb`
 - Graphiques reproductibles avec Matplotlib
 
+## Résultats T9 — Analyse exploratoire (Phase 6)
+
+### Fréquences 1N2 observées (306 matchs, Ligue 1 2024-2025)
+
+| Issue | Fréquence |
+|---|---|
+| Victoire domicile | 46.7% |
+| Match nul | 20.3% |
+| Victoire extérieur | 33.0% |
+
+### Distribution des buts
+
+- Moyenne totale : 2.98 buts/match
+- Moyenne domicile : 1.61 buts/match
+- Moyenne extérieur : 1.37 buts/match
+- 26.8% des matchs ont exactement 2 buts (mode)
+- 40.5% des matchs ont 3 buts ou plus
+
+### Calibration des cotes bet365
+
+| Tranche Cote Domicile | Victoire Obs. | Prob. Implicite | Écart |
+|---|---|---|---|
+| [1.00-1.50[ | 75.5% | 71.6% | +3.9pp |
+| [1.50-2.00[ | 61.8% | 55.5% | +6.3pp |
+| [2.00-3.00[ | 38.8% | 40.0% | -1.2pp |
+| [3.00-5.00[ | 31.3% | 26.5% | +4.8pp |
+| [5.00+] | 13.3% | 15.5% | -2.2pp |
+
+- Marge moyenne bet365 : 5.65%
+- Les cotes [2.00-3.00[ sont les mieux calibrées
+- Les favorites (< 2.00) sont sous-estimées par les bookmakers
+- Les outsiders (> 3.00) sont surévalués
+
+### Limites de l'analyse exploratoire
+
+- Une seule saison (2024-2025) — pas de comparaison inter-saisons
+- Analyse descriptive uniquement : pas de causalité établie
+- Les cotes de fermeture sont connues après le match (pas prédictives)
+- Seule bet365 offre une couverture complète (100%) pour cette saison
+
 ## Limites connues
 
 - Les données proviennent d'une seule source (Football-Data.co.uk), dont la qualité n'est pas vérifiée de manière indépendante.
